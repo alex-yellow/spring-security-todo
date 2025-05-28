@@ -26,3 +26,23 @@ CREATE TABLE tasks (
                        completed BOOLEAN DEFAULT FALSE,
                        user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
 );
+
+-- Добавление ролей
+INSERT INTO roles (name) VALUES
+                             ('ROLE_USER'),
+                             ('ROLE_ADMIN');
+
+-- Добавление пользователей (пароли пока простые, будут заменены Spring Security)
+INSERT INTO users (username, password) VALUES
+                                           ('admin', 'admin123'),
+                                           ('user', 'user123');
+
+-- Назначение ролей
+INSERT INTO user_roles (user_id, role_id) VALUES
+                                              (1, 2), -- admin -> ROLE_ADMIN
+                                              (2, 1); -- user -> ROLE_USER
+
+-- Пример задач
+INSERT INTO tasks (title, description, completed, user_id) VALUES
+                                                               ('Setup Spring Boot Project', 'Initialize project structure and dependencies.', false, 1),
+                                                               ('Create Security Config', 'Configure Spring Security for login', false, 2);
